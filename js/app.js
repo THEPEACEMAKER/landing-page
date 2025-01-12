@@ -61,6 +61,7 @@ function buildNav() {
     navLink.textContent = sectionTitle;
     navLink.href = `#${sectionId}`;
     navLink.classList.add("menu__link");
+    navLink.setAttribute("data-target", sectionId);
 
     // Store the link for later reference
     navLinks.push(navLink);
@@ -92,7 +93,24 @@ function setActiveSection() {
   });
 }
 
-// Scroll to anchor ID using scrollTO event
+// Scroll to anchor ID
+function enableSmoothScrolling() {
+  navLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault(); // Prevent the default anchor behavior
+
+      // Get the target section's ID from the data-target attribute
+      const targetId = link.getAttribute("data-target");
+      const targetSection = document.getElementById(targetId);
+
+      // Scroll to the target section with smooth behavior
+      targetSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  });
+}
 
 /**
  * End Main Functions
@@ -108,4 +126,5 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", setActiveSection);
 
   // Scroll to section on nav link click
+  enableSmoothScrolling();
 });
