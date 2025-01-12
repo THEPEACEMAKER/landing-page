@@ -25,12 +25,17 @@
 
 const sections = document.querySelectorAll("section");
 const navList = document.getElementById("navbar__list");
+const navLinks = []; // you can edit them later, without having to query the dom for them again
 
 /**
  * End Global Variables
  * Start Helper Functions
  *
  */
+function removeActiveClasses() {
+  sections.forEach((section) => section.classList.remove("your-active-class"));
+  navLinks.forEach((link) => link.classList.remove("active"));
+}
 
 /**
  * End Helper Functions
@@ -57,6 +62,9 @@ function buildNav() {
     navLink.href = `#${sectionId}`;
     navLink.classList.add("menu__link");
 
+    // Store the link for later reference
+    navLinks.push(navLink);
+
     navItem.appendChild(navLink);
     fragment.appendChild(navItem);
   });
@@ -67,6 +75,22 @@ function buildNav() {
 }
 
 // Add class 'active' to section when near top of viewport
+function setActiveSection() {
+  sections.forEach((section, index) => {
+    const rect = section.getBoundingClientRect();
+
+    // Check if the section is in the viewport
+    if (rect.top >= -50 && rect.top <= 300) {
+      removeActiveClasses();
+
+      // Add 'your-active-class' to the section
+      section.classList.add("your-active-class");
+
+      // Add 'active' class to the corresponding nav link
+      navLinks[index].classList.add("active");
+    }
+  });
+}
 
 // Scroll to anchor ID using scrollTO event
 
@@ -76,9 +100,12 @@ function buildNav() {
  *
  */
 
-// Build menu
-window.onload = buildNav;
+document.addEventListener("DOMContentLoaded", () => {
+  // Build menu
+  buildNav();
 
-// Scroll to section on link click
+  // Highlight active section and nav link on scroll
+  window.addEventListener("scroll", setActiveSection);
 
-// Set sections as active
+  // Scroll to section on nav link click
+});
