@@ -37,6 +37,16 @@ function removeActiveClasses() {
   navLinks.forEach((link) => link.classList.remove("active"));
 }
 
+function initializeNavToggle() {
+  const navToggle = document.querySelector(".nav-toggle");
+
+  if (navToggle && navList) {
+    navToggle.addEventListener("click", () => {
+      navList.classList.toggle("active");
+    });
+  }
+}
+
 /**
  * End Helper Functions
  * Begin Main Functions
@@ -127,4 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Scroll to section on nav link click
   enableSmoothScrolling();
+
+  // Initialize the nav toggle
+  initializeNavToggle();
 });
