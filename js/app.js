@@ -1,5 +1,4 @@
 /**
- *
  * Manipulating the DOM exercise.
  * Exercise programmatically builds navigation,
  * scrolls to anchors from navigation,
@@ -10,7 +9,6 @@
  * JS Version: ES2015/ES6
  *
  * JS Standard: ESlint
- *
  */
 
 /**
@@ -22,7 +20,6 @@
  * Define Global Variables
  *
  */
-
 const sections = document.querySelectorAll("section");
 const navList = document.getElementById("navbar__list");
 const navLinks = []; // you can edit them later, without having to query the dom for them again
@@ -32,12 +29,15 @@ const navLinks = []; // you can edit them later, without having to query the dom
  * Start Helper Functions
  *
  */
-function removeActiveClasses() {
+
+// Helper function to remove active classes from sections and links
+const removeActiveClasses = () => {
   sections.forEach((section) => section.classList.remove("your-active-class"));
   navLinks.forEach((link) => link.classList.remove("active"));
-}
+};
 
-function initializeNavToggle() {
+// Initialize the nav toggle button
+const initializeNavToggle = () => {
   const navToggle = document.querySelector(".nav-toggle");
 
   if (navToggle && navList) {
@@ -45,7 +45,7 @@ function initializeNavToggle() {
       navList.classList.toggle("active");
     });
   }
-}
+};
 
 /**
  * End Helper Functions
@@ -53,8 +53,8 @@ function initializeNavToggle() {
  *
  */
 
-// build the nav
-function buildNav() {
+// Build the navigation menu dynamically
+const buildNav = () => {
   const fragment = document.createDocumentFragment();
 
   // Early exit if no sections exist
@@ -81,12 +81,11 @@ function buildNav() {
   });
 
   // Insert the generated menu into the navbar container
-  const navbarList = document.getElementById("navbar__list");
-  navbarList.appendChild(fragment);
-}
+  navList.appendChild(fragment);
+};
 
-// Add class 'active' to section when near top of viewport
-function setActiveSection() {
+// Add 'active' class to section when near top of viewport
+const setActiveSection = () => {
   sections.forEach((section, index) => {
     const rect = section.getBoundingClientRect();
 
@@ -101,10 +100,10 @@ function setActiveSection() {
       navLinks[index].classList.add("active");
     }
   });
-}
+};
 
-// Scroll to anchor ID
-function enableSmoothScrolling() {
+// Scroll to anchor ID and close menu on small screens
+const enableSmoothScrolling = () => {
   navLinks.forEach((link) => {
     link.addEventListener("click", (event) => {
       event.preventDefault(); // Prevent the default anchor behavior
@@ -125,7 +124,7 @@ function enableSmoothScrolling() {
       }
     });
   });
-}
+};
 
 /**
  * End Main Functions
@@ -133,6 +132,7 @@ function enableSmoothScrolling() {
  *
  */
 
+// Event listener for DOM content loaded
 document.addEventListener("DOMContentLoaded", () => {
   // Build menu
   buildNav();
