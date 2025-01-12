@@ -118,6 +118,11 @@ function enableSmoothScrolling() {
         behavior: "smooth",
         block: "start",
       });
+
+      // Close the menu on small screens
+      if (navList.classList.contains("active")) {
+        navList.classList.remove("active");
+      }
     });
   });
 }
